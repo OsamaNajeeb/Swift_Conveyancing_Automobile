@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:id="@+id/iCustHome"
+        android:title="Home"
+        android:icon="@drawable/home_24"/>
+
+    <item android:id="@+id/iCustHelp"
+        android:title="Contact Support"
+        android:icon="@drawable/contact_support_24"/>
+
+    <item android:id="@+id/iCustProSet"
+        android:title="Profile Setting"
+        android:icon="@drawable/account_circle_24"/>
+
+</menu>

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+    <color name="semi_transparent">#6DD0FD</color>
+    <color name="transparent">#00FCFAFA</color>
+    <color name="background_color">#F3E9FE</color>
+    <color name="text_color">#331866</color>
+    <color name="search_color">#4AAF0AEC</color>
+    <color name="splashcolor">#40a800ba</color>
+    <color name="registratingbgcolor">#CBCECECE</color>
+    <color name="holo_purple">#ec6efa</color>
+    <color name="red">#FF1201</color>
+</resources>

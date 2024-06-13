@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+
+    <application
+        android:allowBackup="true"
+        android:dataExtractionRules="@xml/data_extraction_rules"
+        android:fullBackupContent="@xml/backup_rules"
+        android:icon="@mipmap/ic_new_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_new_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/Theme.SCA"
+        tools:targetApi="31">
+        <activity
+            android:name=".Extra.ContactUsActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Homepage.DriverHomePageActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Homepage.CustomerHomePageActivity"
+            android:exported="false" />
+
+        <service
+            android:name=".Utility.onAppTerminated"
+            android:stopWithTask="false" />
+
+        <activity
+            android:name=".History.HistorySingleActivity"
+            android:exported="false" />
+        <activity
+            android:name=".History.DriverHistoryActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Settings.DriverSettingsActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Settings.CustomerSettingsActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Maps.CustomerMapsActivity"
+            android:exported="false" />
+
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="${MAPS_API_KEY}" />
+
+        <activity
+            android:name=".Maps.DriverMapsActivity"
+            android:exported="false"
+            android:label="@string/title_activity_driver_maps" />
+        <activity
+            android:name=".Authentication.DriverRegActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Authentication.DriverLoginActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Authentication.CustomerLoginActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Authentication.CustomerRegActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Authentication.AccountActivity"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+    </application>
+
+</manifest>

@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">SCA</string>
+    <string name="title_activity_driver_maps">DriverMapsActivity</string>
+    <string name="my_api_key">AIzaSyB7v-lGi2mCG-0PL6xl-HzXtEOk2EBjYJo</string>
+    <string name="Logout">Logout</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+</resources>

@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "406478350701",
+    "project_id": "scaserver-f1095",
+    "storage_bucket": "scaserver-f1095.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:406478350701:android:2dfcd657cf9c9849059264",
+        "android_client_info": {
+          "package_name": "com.example.sca"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB8RgZ7TcRoxHCN2ilVH63dQP9Lo9JYn2w"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
