@@ -53,26 +53,30 @@ public class DriverLoginActivity extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
 
         BTNLogin.setOnClickListener(view -> {
-            String username = ETUser.getText().toString();
-            String password = ETPass.getText().toString();
+            String username = ETUser.getText().toString().trim();
+            String password = ETPass.getText().toString().trim();
 
             if (TextUtils.isEmpty(username)) {
-                Toast.makeText(getApplicationContext(), "Enter email address!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), "Enter email address!",
+                        Toast.LENGTH_SHORT).show();
                 return;
             }
 
             if (!Patterns.EMAIL_ADDRESS.matcher(username).matches()) {
-                Toast.makeText(getApplicationContext(), "Enter a valid email address!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), "Enter a valid email address!",
+                        Toast.LENGTH_SHORT).show();
                 return;
             }
 
             if (TextUtils.isEmpty(password)) {
-                Toast.makeText(getApplicationContext(), "Enter password!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), "Enter password!",
+                        Toast.LENGTH_SHORT).show();
                 return;
             }
 
             if (password.length() < 6) {
-                Toast.makeText(getApplicationContext(), "Password must be at least 6 characters!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), "Password must be at least 6 characters!",
+                        Toast.LENGTH_SHORT).show();
                 return;
             }
 
