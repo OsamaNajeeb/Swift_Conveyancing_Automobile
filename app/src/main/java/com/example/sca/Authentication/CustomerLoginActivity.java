@@ -3,6 +3,7 @@ package com.example.sca.Authentication;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Patterns;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -18,6 +19,7 @@ import androidx.core.view.WindowInsetsCompat;
 import com.example.sca.Homepage.CustomerHomePageActivity;
 import com.example.sca.R;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -29,7 +31,6 @@ public class CustomerLoginActivity extends AppCompatActivity {
     private Button BTNLogin, BTNBack;
     private TextView TVRegister;
     private FirebaseAuth mAuth;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,75 +51,79 @@ public class CustomerLoginActivity extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
 
         BTNLogin.setOnClickListener(view -> {
-            String username = ETUser.getText().toString();
-            String password = ETPass.getText().toString();
+            String username = ETUser.getText().toString().trim();
+            String password = ETPass.getText().toString().trim();
 
             if (TextUtils.isEmpty(username)) {
-                Toast.makeText(getApplicationContext(), "Enter email address!",
-                        Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), "Enter email address!", Toast.LENGTH_SHORT).show();
+                return;
+            }
+
+            if (!Patterns.EMAIL_ADDRESS.matcher(username).matches()) {
+                Toast.makeText(getApplicationContext(), "Enter a valid email address!", Toast.LENGTH_SHORT).show();
                 return;
             }
 
             if (TextUtils.isEmpty(password)) {
-                Toast.makeText(getApplicationContext(), "Enter password!",
-                        Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), "Enter password!", Toast.LENGTH_SHORT).show();
                 return;
             }
 
-            mAuth.signInWithEmailAndPassword(username, password)
-                    .addOnCompleteListener(task -> {
-                        if(task.isSuccessful()){
+            if (password.length() < 6) {
+                Toast.makeText(getApplicationContext(), "Password must be at least 6 characters!", Toast.LENGTH_SHORT).show();
+                return;
+            }
 
-                            String user_ID = mAuth.getCurrentUser().getUid();
-                            String userAccounts = "Users";
-                            String accountType = "Customers";
+            mAuth.signInWithEmailAndPassword(username, password).addOnCompleteListener(task -> {
+                if (task.isSuccessful()) {
+                    String user_ID = mAuth.getCurrentUser().getUid();
+                    String userAccounts = "Users";
+                    String accountType = "Customers";
 
-                            DatabaseReference userAccRef =
-                                    FirebaseDatabase.getInstance().getReference().child(userAccounts);
-                            userAccRef.addListenerForSingleValueEvent(new ValueEventListener() {
-                                @Override
-                                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                                    if(dataSnapshot.hasChild(accountType) &&
-                                            dataSnapshot.child(accountType).hasChild(user_ID)) {
-
-                                        Toast.makeText(CustomerLoginActivity.this, "Login successful",
-                                                Toast.LENGTH_SHORT).show();
-                                        startActivity(new Intent(CustomerLoginActivity.this,
-                                                CustomerHomePageActivity.class));
-                                        finish();
-                                    }
-                                    else{
-                                        Toast.makeText(CustomerLoginActivity.this,
-                                                "User account not found", Toast.LENGTH_SHORT).show();
-                                    }
-                                }
-
-                                @Override
-                                public void onCancelled(@NonNull DatabaseError error) {
-                                    Toast.makeText(CustomerLoginActivity.this, "Database error",
-                                            Toast.LENGTH_SHORT).show();
-                                }
-                            });
-
+                    DatabaseReference userAccRef = FirebaseDatabase.getInstance().getReference().child(userAccounts);
+                    userAccRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                            if (dataSnapshot.hasChild(accountType) && dataSnapshot.child(accountType)
+                                    .hasChild(user_ID)) {
+                                Toast.makeText(CustomerLoginActivity.this, "Login successful",
+                                        Toast.LENGTH_SHORT).show();
+                                startActivity(new Intent(CustomerLoginActivity.this,
+                                        CustomerHomePageActivity.class));
+                                finish();
+                            } else {
+                                Toast.makeText(CustomerLoginActivity.this,
+                                        "User account not found", Toast.LENGTH_SHORT).show();
+                            }
                         }
-                        else {
-                            Toast.makeText(CustomerLoginActivity.this, "Login failed",
-                                    Toast.LENGTH_SHORT).show();
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError error) {
+                            Toast.makeText(CustomerLoginActivity.this, "Database error", Toast.LENGTH_SHORT).show();
                         }
                     });
+                } else {
+                    String errorMessage;
+                    try {
+                        throw task.getException();
+                    } catch (FirebaseAuthInvalidCredentialsException e) {
+                        errorMessage = "Invalid password.";
+                    } catch (Exception e) {
+                        errorMessage = "Authentication failed.";
+                    }
+                    Toast.makeText(CustomerLoginActivity.this, errorMessage, Toast.LENGTH_SHORT).show();
+                }
+            });
         });
 
         BTNBack.setOnClickListener(view -> {
-            startActivity(new Intent(CustomerLoginActivity.this,
-                    AccountActivity.class));
+            startActivity(new Intent(CustomerLoginActivity.this, AccountActivity.class));
             finish();
         });
 
         TVRegister.setOnClickListener(view -> {
-            startActivity(new Intent(CustomerLoginActivity.this,
-                    CustomerRegActivity.class));
+            startActivity(new Intent(CustomerLoginActivity.this, CustomerRegActivity.class));
             finish();
         });
-
     }
 }
